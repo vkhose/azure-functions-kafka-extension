@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.ResourceManager.EventHubs;
+using Azure.ResourceManager.EventHubs.Models;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.queue.eventhub
 {
@@ -33,32 +36,52 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.queue.event
             throw new NotImplementedException();
         }
 
-        public Task createAsync(string queueName)
+        public async Task createAsync(string queueName)
         {
-            int count = 0;
-            while (count < MAX_RETRY_COUNT)
-            {
-                try
-                {
-                    // TODO
-                    // 1. check if already exists
-                    //  1.1 clear the eventhub or delete that
-                    // 2. create the new eventhub
-                    // 2.1 if creation failed retry three times
-                    // return if success
-                    return Task.CompletedTask;
-                }
-                catch (Exception ex)
-                {
-                    if (count >= MAX_RETRY_COUNT)
-                        throw ex;
-                }
-                finally
-                {
-                    count++;
-                }
-            }
-            throw new NotImplementedException();
+            //string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID");
+            //Console.WriteLine(subscriptionId);
+            //var credential = new DefaultAzureCredential();
+            //var eventHubManagementClient = new EventHubsManagementClient(subscriptionId, credential);
+            //var eventhublist = eventHubManagementClient.EventHubs.ListByNamespaceAsync("kafkagroup", "KafkaE2E");
+            //var newEventHubresponse = eventHubManagementClient.EventHubs.CreateOrUpdate("kafkagroup", "KafkaE2E", queueName,
+            //    new Eventhub()
+            //    {
+            //        MessageRetentionInDays = 1,
+            //        PartitionCount = 4
+            //    });
+            //Console.WriteLine(newEventHubresponse.Value.Name);
+            //Console.WriteLine(newEventHubresponse.Value.PartitionCount);
+            //await foreach (var eventhub in eventhublist)
+            //{
+            //    Console.WriteLine(eventhub.Name);
+            //}
+
+            //int count = 0;
+            //while (count < MAX_RETRY_COUNT)
+            //{
+            //    try
+            //    {
+            //        // TODO
+            //        // 1. check if already exists
+            //        //  1.1 clear the eventhub or delete that
+            //        // 2. create the new eventhub
+            //        // 2.1 if creation failed retry three times
+            //        // return if success
+
+
+            //        return Task.CompletedTask;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        if (count >= MAX_RETRY_COUNT)
+            //            throw ex;
+            //    }
+            //    finally
+            //    {
+            //        count++;
+            //    }
+            //}
+            //throw new NotImplementedException();
 
         }
 

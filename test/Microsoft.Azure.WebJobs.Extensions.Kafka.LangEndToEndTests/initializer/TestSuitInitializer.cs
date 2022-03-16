@@ -33,16 +33,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.initializer
         //Intialize Helper vs Constants?
         private InitializeHelper initializeHelper = InitializeHelper.GetInstance();
         private List<Process> processes = new List<Process>();
-
+        private BrokerType brokerType;
         //Async
         //Why does this return ICommand?
         public void InitializeTestSuit(Language language, BrokerType brokerType)
         {
-            /*var clearStorageQueueTask = ClearStorageQueueAsync(language);
+            this.brokerType = brokerType;
+            /*var clearStorageQueueTask = ClearStorageQueueAsync(language);*/
             var createEventHubTask = CreateEventHubAsync(language);
             
-            Task.WaitAll(clearStorageQueueTask, createEventHubTask);*/
-            Task.WaitAll(StartupApplicationAsync(language, brokerType));
+            //Task.WaitAll(clearStorageQueueTask, createEventHubTask);*/
+            //Task.WaitAll(StartupApplicationAsync(language, brokerType));
         }
 
         private async Task StartupApplicationAsync(Language language, BrokerType brokerType)
@@ -75,9 +76,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.initializer
 
         private async Task ClearStorageQueueAsync(string singleEventStorageQueueName, string multiEventStorageQueueName)
         {
-            Command<QueueResponse> singleCommand = new QueueCommand(QueueType.EventHub,
+            Command<QueueResponse> singleCommand = new QueueCommand(QueueType.AzureStorageQueue,
                         QueueOperation.CREATE, singleEventStorageQueueName);
-            Command<QueueResponse> multiCommand = new QueueCommand(QueueType.EventHub,
+            Command<QueueResponse> multiCommand = new QueueCommand(QueueType.AzureStorageQueue,
                         QueueOperation.CREATE, multiEventStorageQueueName);
             
             await Task.WhenAll(singleCommand.ExecuteCommandAsync(), multiCommand.ExecuteCommandAsync());
@@ -86,9 +87,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.initializer
         private async Task CreateEventHubAsync(Language language)
         {
             string eventHubSingleName = Utils.BuildCloudBrokerName(QueueType.EventHub,
-                        AppType.SINGLE_EVENT, language);
+                        AppType.SINGLE_EVENT, language) + brokerType.ToString();
             string eventHubMultiName = Utils.BuildCloudBrokerName(QueueType.EventHub,
-                        AppType.BATCH_EVENT, language);
+                        AppType.BATCH_EVENT, language) + brokerType.ToString();
             
             await BuildEventHubAsync(eventHubSingleName, eventHubMultiName);
         }

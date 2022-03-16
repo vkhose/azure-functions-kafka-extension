@@ -15,19 +15,19 @@ using System.Threading;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.Tests
 {
-    public class PythonConfluentAppTest : BaseE2E, IClassFixture<KafkaE2EFixture>
+    public class PythonEventHubAppTest : BaseE2E, IClassFixture<KafkaE2EFixture>
     {
         private KafkaE2EFixture kafkaE2EFixture;
         ITestOutputHelper output;
 
-        public PythonConfluentAppTest(KafkaE2EFixture kafkaE2EFixture, ITestOutputHelper output) : base(kafkaE2EFixture, Language.PYTHON, BrokerType.CONFLUENT, output)
+        public PythonEventHubAppTest(KafkaE2EFixture kafkaE2EFixture, ITestOutputHelper output) : base(kafkaE2EFixture, Language.PYTHON, BrokerType.EVENTHUB, output)
         {
             this.kafkaE2EFixture = kafkaE2EFixture;
             this.output = output;
         }
 
         [Fact]
-        public async Task Python_App_Test_Single_Event_Confluent()
+        public async Task Python_App_Test_Single_Event_EventHub()
         {
             string reqMsg = "Single-Event";
             string url = "http://localhost:" + Constants.PYTHONAPP_CONFLUENT_PORT + "/api/" + Constants.PYTHON_SINGLE_APP_NAME;
@@ -39,16 +39,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.Tests
                null, reqParm, null);
 
             List<string> expectedOutput = new List<string> { reqMsg };
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
             this.output.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString());
-
             //  await Test(AppType.SINGLE_EVENT, InvokeType.HTTP, httpRequestEntity, null, expectedOutput);
 
             //Console.WriteLine("Python test called");
         }
 
         [Fact]
-        public async Task Python_App_Test_Multi_Event_Confluent()
+        public async Task Python_App_Test_Multi_Event_EventHub()
         {
             string reqMsg = "Single-Event";
             string url = "http://localhost:" + Constants.PYTHONAPP_CONFLUENT_PORT + "/api/" + Constants.PYTHON_SINGLE_APP_NAME;
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.Tests
                null, reqParm, null);
 
             List<string> expectedOutput = new List<string> { reqMsg };
-            Thread.Sleep(5000);
+            Thread.Sleep(2000);
             this.output.WriteLine(Thread.CurrentThread.ManagedThreadId.ToString());
 
             // await Test(AppType.BATCH_EVENT, InvokeType.HTTP, httpRequestEntity, null, expectedOutput);

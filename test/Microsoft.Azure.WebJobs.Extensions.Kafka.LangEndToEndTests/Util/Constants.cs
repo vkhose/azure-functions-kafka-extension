@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.Util
 
 		public const string SPACE_CHAR = " ";
 		public const string E2E = "e2e";
-		public const string KAFKA = "";
+		public const string KAFKA = "kafka";
 		public const string FUNC_START = "func start";
 		public const string HIPHEN = "-";
 		

@@ -17,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests
         private AppType appType;
         private BrokerType brokerType;
         protected bool isInitialized = false;
+        TestSuitInitializer testSuitInitializer;
 
         public KafkaE2EFixture()
         {
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests
         {
             if(!isInitialized)
             {
-                TestSuitInitializer testSuitInitializer = new TestSuitInitializer();
+                testSuitInitializer = new TestSuitInitializer();
                 //Infra setup + Func Apps Startup Start
                 testSuitInitializer.InitializeTestSuit(language, brokerType);
                 isInitialized = true;

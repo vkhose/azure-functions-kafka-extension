@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.helper
         private static InitializeHelper instance = new InitializeHelper();
         private static readonly string E2E = "e2e";
         private static readonly string HIPHEN = "-";
-        private static readonly string KAFKA = "KAFKA";
+        private static readonly string KAFKA = "kafka";
 
         public static InitializeHelper GetInstance()
         {
@@ -22,12 +22,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Kafka.LangEndToEndTests.helper
         public string BuildCloudBrokerName(QueueType queueType, AppType appType, Language language)
         {
             //return Constants.
-            return E2E + HIPHEN + KAFKA + HIPHEN + language.ToString() + HIPHEN + appType.ToString() + HIPHEN + queueType.ToString();
+            return E2E + HIPHEN + KAFKA + HIPHEN + language.ToString() + HIPHEN + GiveAppTypeInString(appType) + HIPHEN + queueType.ToString();
         }
 
         public string BuildStorageQueueName(QueueType queueType, AppType appType, Language language)
         {
-            return E2E + HIPHEN + language.ToString() + HIPHEN + appType.ToString() + HIPHEN + queueType.ToString();
+            return E2E + HIPHEN + language.ToString() + HIPHEN + GiveAppTypeInString(appType) + HIPHEN + queueType.ToString();
+        }
+
+        public string GiveAppTypeInString(AppType appType)
+        {
+            return appType == AppType.SINGLE_EVENT ? "single" : "multi";
         }
 
     }
